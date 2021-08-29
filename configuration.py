@@ -1,0 +1,2 @@
+STOCK = "MSFT"
+PERIOD = "6mo"
