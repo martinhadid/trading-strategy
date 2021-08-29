@@ -1,2 +1,3 @@
 STOCK = "MSFT"
 PERIOD = "6mo"
+STOP_LOSS = 0.06

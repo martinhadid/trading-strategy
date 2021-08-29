@@ -1,9 +1,23 @@
 1) data extraction: DONE
 2) trading strategy: DONE
-3) optimizations: stochastic oscillator and fibonacci retracements
+    stop loss
+3) optimizations:
+    stochastic oscillator
+        technical definition
+        plot
+    fibonacci retracements
+        technical definition
+        plot
 4) SMA magic, classic and intensive
-4) SMA 100 days
-5) Technical Analysis
-6) RSI - tops and bottoms
-7) deploy as streamlit application
-8) alerts and notifications
+5) Mid term tendency:
+    SMA 100 days: DONE
+    plot
+        vertical lines
+        horizontal line: DONE
+6) Technical Analysis
+7) RSI - tops and bottoms
+    technical definition
+    plot
+        vertical lines
+8) deploy as streamlit application
+9) alerts and notifications
