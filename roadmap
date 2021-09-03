@@ -1,3 +1,4 @@
+Technical Roadmap
 1) data extraction: DONE
 2) trading strategy: DONE
     stop loss
@@ -19,5 +20,13 @@
     technical definition
     plot
         vertical lines
-8) deploy as streamlit application
+8) deploy as streamlit application: DONE
 9) alerts and notifications
+
+-----------------------------
+
+Product Roadmap
+1) testing: rodo
+2) fake account etoro
+3) real money
+4) crypto trading

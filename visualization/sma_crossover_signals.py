@@ -1,20 +1,26 @@
 import matplotlib.pyplot as plt
 import pandas as pd
 
+FIG_SIZE = (20, 10)
+
 
 def plot_sma_signals(df: pd.DataFrame):
-    plt.figure(figsize=(20, 10))
-    df["Close"].plot(color="k", label="Close Price")
-    df["SMA_10"].plot(color="r", label="10-day SMA")
-    df["SMA_20"].plot(color="b", label="20-day SMA")
-    df["SMA_100"].plot(color="g", label="100-day SMA")
-    plt.plot(df[df["position"] == 1].index, df["SMA_10"][df["position"] == 1], marker="^",
-             markersize=15, color="g", label="buy")
-    plt.plot(df[df["position"] == -1].index, df["SMA_20"][df["position"] == -1],
-             marker="v", markersize=15, color="r", label="sell")
-    plt.ylabel("Price", fontsize=15)
-    plt.xlabel("Date", fontsize=15)
-    plt.title("Trading Strategy Signals", fontsize=20)
-    plt.legend()
-    plt.grid()
-    plt.savefig(fname="SMA Crossover")
+    fig, ax = plt.subplots(figsize=FIG_SIZE)
+    ax.plot(df.index, df["Close"])
+    ax.plot(df.index, df["SMA_10"])
+    ax.plot(df.index, df["SMA_20"])
+    # ax.plot(df.index, df["SMA_100"], color="g")
+    plt.scatter(
+        df[df["position"] == 1]["SMA_10"].index,
+        df["SMA_10"][df["position"] == 1],
+        marker="^", s=150, color="g"
+    )
+    plt.scatter(
+        df[df["position"] == -1]["SMA_10"].index,
+        df["SMA_10"][df["position"] == -1],
+        marker="v", s=150, color="r"
+    )
+    ax.legend(["Close Price", "SMA_10", "SMA_20", "Buy", "Sell"])
+    ax.set(xlabel="Date", ylabel="Close Price")
+    fig.savefig(fname="visualization/output/SMA Crossover")
+    return fig
