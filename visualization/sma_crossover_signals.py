@@ -22,5 +22,6 @@ def plot_sma_signals(df: pd.DataFrame):
     )
     ax.legend(["Close Price", "SMA_10", "SMA_20", "Buy", "Sell"])
     ax.set(xlabel="Date", ylabel="Close Price")
+    ax.grid()
     fig.savefig(fname="visualization/output/SMA Crossover")
     return fig
