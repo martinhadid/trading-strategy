@@ -4,7 +4,7 @@ import pandas as pd
 
 
 def _price_moving_average(days: int, df: pd.DataFrame) -> pd.Series:
-    return df["Close"].rolling(window=days, min_periods=1).mean()
+    return df["Close"].rolling(window=days).mean()
 
 
 price_moving_average_10_days = partial(_price_moving_average, 10)

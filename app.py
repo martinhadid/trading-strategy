@@ -24,7 +24,7 @@ def request_ticker_prices(ticker_name: str, period: str) -> pd.DataFrame:
 def render_sidebar() -> (str, str):
     st.sidebar.title(body="Configuration")
     ticker = st.sidebar.selectbox(label="Select one symbol", options=STOCKS)
-    period = st.sidebar.selectbox(label="Select Period", options=("3mo", *VALID_PERIODS))
+    period = st.sidebar.selectbox(label="Select Period", options=("6mo", *VALID_PERIODS))
     return ticker, period
 
 
