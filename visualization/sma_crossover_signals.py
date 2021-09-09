@@ -34,6 +34,7 @@ def plot_sma_signals(df: pd.DataFrame):
         ax.annotate(round(value), (index, value))
 
     ax.set_xticks(close_position.index.union(open_position.index))
+    ax.tick_params(axis="x", rotation=90)
     ax.legend(["Close Price", "SMA_10", "SMA_20", "Buy", "Sell"])
     ax.set(xlabel="Date", ylabel="Close Price")
     ax.grid()
