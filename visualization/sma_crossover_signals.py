@@ -2,6 +2,8 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 FIG_SIZE = (20, 10)
+X_ROTATION = 90
+VALUE_OFFSET = (5, 25)
 
 
 def plot_sma_signals(df: pd.DataFrame):
@@ -19,7 +21,8 @@ def plot_sma_signals(df: pd.DataFrame):
         color="g"
     )
     for index, value in open_position.iteritems():
-        ax.annotate(round(value), (index, value))
+        ax.annotate(text=round(value), xy=(index, value), xytext=VALUE_OFFSET,
+                    textcoords="offset points", ha="center")
 
     close_position = df[df["position"] == -1]["SMA_10"]
     ax.scatter(
@@ -31,10 +34,11 @@ def plot_sma_signals(df: pd.DataFrame):
     )
 
     for index, value in close_position.iteritems():
-        ax.annotate(round(value), (index, value))
+        ax.annotate(text=round(value), xy=(index, value), xytext=VALUE_OFFSET,
+                    textcoords="offset points", ha="center")
 
     ax.set_xticks(close_position.index.union(open_position.index))
-    ax.tick_params(axis="x", rotation=90)
+    ax.tick_params(axis="x", rotation=X_ROTATION)
     ax.legend(["Close Price", "SMA_10", "SMA_20", "Buy", "Sell"])
     ax.set(xlabel="Date", ylabel="Close Price")
     ax.grid()
