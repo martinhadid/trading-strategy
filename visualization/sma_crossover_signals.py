@@ -4,6 +4,7 @@ import pandas as pd
 FIG_SIZE = (20, 10)
 X_ROTATION = 90
 VALUE_OFFSET = (5, 25)
+ARROW_SIZE = 150
 
 
 def plot_sma_signals(df: pd.DataFrame):
@@ -17,11 +18,11 @@ def plot_sma_signals(df: pd.DataFrame):
         open_position.index,
         open_position,
         marker="^",
-        s=150,
+        s=ARROW_SIZE,
         color="g"
     )
     for index, value in open_position.iteritems():
-        ax.annotate(text=round(value), xy=(index, value), xytext=VALUE_OFFSET,
+        ax.annotate(text=round(value, 2), xy=(index, value), xytext=VALUE_OFFSET,
                     textcoords="offset points", ha="center")
 
     close_position = df[df["position"] == -1]["SMA_10"]
@@ -29,12 +30,12 @@ def plot_sma_signals(df: pd.DataFrame):
         close_position.index,
         close_position,
         marker="v",
-        s=150,
+        s=ARROW_SIZE,
         color="r"
     )
 
     for index, value in close_position.iteritems():
-        ax.annotate(text=round(value), xy=(index, value), xytext=VALUE_OFFSET,
+        ax.annotate(text=round(value, 2), xy=(index, value), xytext=VALUE_OFFSET,
                     textcoords="offset points", ha="center")
 
     ax.set_xticks(close_position.index.union(open_position.index))
