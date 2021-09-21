@@ -14,6 +14,6 @@ def plot_stochastic_oscillator_signals(df: pd.DataFrame) -> Figure:
     # volume
     # ax2 = ax.twinx()
     # ax2.bar(x=df.index, height=df["Volume"])
-    ax.legend(["%K", "%D"])
+    ax.legend(["%K", "%D", "Overbought", "Oversold"])
     ax.set(xlabel="Date", ylabel="Stochastic Oscillator")
     return fig

@@ -21,12 +21,12 @@ D_TIME_PERIODS = 3
 def stochastic_oscillator(df: pd.DataFrame) -> pd.DataFrame:
     df["K_High"] = df["High"].rolling(
         window=K_TIME_PERIODS,
-        min_periods=K_TIME_PERIODS
+        min_periods=1
     ).max()
 
     df["K_Low"] = df["Low"].rolling(
         window=K_TIME_PERIODS,
-        min_periods=K_TIME_PERIODS
+        min_periods=1
     ).min()
 
     price_low_difference = df["Close"] - df["K_Low"]
@@ -34,12 +34,12 @@ def stochastic_oscillator(df: pd.DataFrame) -> pd.DataFrame:
 
     price_low_difference_sum = price_low_difference.rolling(
         window=K_SLOWING_PERIODS,
-        min_periods=K_SLOWING_PERIODS
+        min_periods=1
     ).sum()
 
     high_low_difference_sum = high_low_difference.rolling(
         window=K_SLOWING_PERIODS,
-        min_periods=K_SLOWING_PERIODS
+        min_periods=1
     ).sum()
 
     df["%K"] = 100 * price_low_difference_sum / high_low_difference_sum
