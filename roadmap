@@ -1,27 +1,30 @@
 Technical Roadmap
 1) data extraction: DONE
-2) trading strategy: DONE
+2) price plot
+3) table with profits
+4) trading strategy: DONE
     stop loss
-3) optimizations:
-    stochastic oscillator
-        technical definition
-        plot
+5) optimizations:
+    stochastic oscillator: DONE
+        technical definition: DONE
+        plot: DONE
     fibonacci retracements
         technical definition
         plot
-4) SMA magic, classic and intensive
-5) Mid term tendency:
+6) SMA magic, classic and intensive
+7) Mid term tendency:
     SMA 100 days: DONE
-    plot
+    plot: DONE
         vertical lines: DONE
         horizontal line: DONE
-6) Technical Analysis
-7) RSI - tops and bottoms
+8) Technical Analysis
+9) RSI - tops and bottoms
     technical definition
     plot
         vertical lines
-8) deploy as streamlit application: DONE
-9) alerts and notifications
+10) deploy as streamlit application: DONE
+11) login credentials
+12) alerts and notifications
 
 -----------------------------
 
