@@ -2,7 +2,7 @@ import pandas as pd
 from matplotlib import pyplot as plt
 from matplotlib.figure import Figure
 
-FIG_SIZE = (20, 5)
+from visualization.utils import FIG_SIZE
 
 
 def plot_stochastic_oscillator_signals(df: pd.DataFrame) -> Figure:
@@ -15,5 +15,4 @@ def plot_stochastic_oscillator_signals(df: pd.DataFrame) -> Figure:
     # ax2 = ax.twinx()
     # ax2.bar(x=df.index, height=df["Volume"])
     ax.legend(["%K", "%D", "Overbought", "Oversold"])
-    ax.set(xlabel="Date", ylabel="Stochastic Oscillator")
     return fig

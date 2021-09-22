@@ -2,7 +2,7 @@ import pandas as pd
 
 X_ROTATION = 90
 VALUE_OFFSET = (5, 25)
-FIG_SIZE = (20, 5)
+FIG_SIZE = (25, 3)
 ARROW_SIZE = 150
 
 

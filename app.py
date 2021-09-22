@@ -12,14 +12,13 @@ from visualization.ewm_crossover_signals import plot_ewm_signals
 from visualization.price import plot_price
 from visualization.stochastic_oscillator_signals import plot_stochastic_oscillator_signals
 
-st.set_page_config(
-    layout="wide", initial_sidebar_state="auto", page_title="Trading Stategy",
-    page_icon=None
-)
+st.set_page_config(layout="wide", initial_sidebar_state="auto",
+                   page_title="Trading Stategy")
 
 
-def request_ticker(ticker_name: str, start_date: str, end_date: str) -> pd.DataFrame:
-    return yf.download(tickers=ticker_name, start=start_date, end=end_date, interval="1d")
+@st.cache(allow_output_mutation=True)
+def request_ticker(ticker_name: str) -> pd.DataFrame:
+    return yf.download(tickers=ticker_name, period="5y", interval="1d")
 
 
 def render_sidebar() -> (str, str, str):
@@ -31,36 +30,38 @@ def render_sidebar() -> (str, str, str):
 
 
 def render_price(chart_data: pd.DataFrame):
-    st.markdown("<h1 style='text-align: center;'>Price</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align: center;'>Close Price</h1>",
+                unsafe_allow_html=True)
     fig = plot_price(df=chart_data)
     st.pyplot(fig)
 
 
 def render_ewm_signals(chart_data: pd.DataFrame):
-    st.markdown("<h1 style='text-align: center;'>Exp Moving Average Crossover</h1>",
+    st.markdown("<h1 style='text-align: center;'>EMA Crossover</h1>",
                 unsafe_allow_html=True)
     fig = plot_ewm_signals(df=chart_data)
     st.pyplot(fig)
 
 
 def render_stochastic_oscillator(chart_data: pd.DataFrame):
-    st.markdown("<h1 style='text-align: center;'>Stochastic Oscillator</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align: center;'>Stochastic Oscillator</h1>",
+                unsafe_allow_html=True)
     fig = plot_stochastic_oscillator_signals(df=chart_data)
     st.pyplot(fig)
 
 
 def app():
     ticker, start_date, end_date = render_sidebar()
-    stock_data = request_ticker(ticker_name=ticker, start_date=start_date,
-                                end_date=end_date)
+    stock_data = request_ticker(ticker_name=ticker)
 
     df_stock = stock_tendency(df=stock_data)
     df_stock_position = set_trading_strategy(df=df_stock)
     df_stochastic_oscillator = stochastic_oscillator(df=df_stock_position)
 
-    render_price(chart_data=df_stock_position)
-    render_ewm_signals(chart_data=df_stock_position)
-    render_stochastic_oscillator(chart_data=df_stochastic_oscillator)
+    chart_data = df_stochastic_oscillator.loc[start_date:end_date]
+    render_price(chart_data=chart_data)
+    render_ewm_signals(chart_data=chart_data)
+    render_stochastic_oscillator(chart_data=chart_data)
 
 
 if __name__ == "__main__":

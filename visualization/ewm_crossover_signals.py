@@ -27,6 +27,5 @@ def plot_ewm_signals(df: pd.DataFrame) -> Figure:
     ax.set_xticks(x_axis_dates)
     ax.tick_params(axis="x", rotation=X_ROTATION)
     ax.legend(["SMA_10", "SMA_20", "SMA_100", "Buy", "Sell"])
-    ax.set(xlabel="Date", ylabel="Exp Moving Average Price")
     ax.grid()
     return fig
