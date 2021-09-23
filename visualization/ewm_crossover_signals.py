@@ -25,6 +25,6 @@ def plot_ewm_signals(df: pd.DataFrame) -> Figure:
     )
     ax.set_xticks(x_axis_dates)
     ax.tick_params(axis="x", rotation=X_ROTATION)
-    ax.legend(["SMA_10", "SMA_20", "Buy", "Sell"])
+    ax.legend(["EMA_10", "EMA_20", "Buy", "Sell"])
     ax.grid()
     return fig

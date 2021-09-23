@@ -40,6 +40,6 @@ def plot_price(df: pd.DataFrame) -> Figure:
     )
     ax.set_xticks(x_axis_dates)
     ax.tick_params(axis="x", rotation=X_ROTATION)
-    ax.legend(["Close Price", "SMA_100"])
+    ax.legend(["Close Price", "EMA_100"])
     ax.grid()
     return fig
