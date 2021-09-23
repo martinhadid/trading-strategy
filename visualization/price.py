@@ -14,7 +14,7 @@ def plot_price(df: pd.DataFrame) -> Figure:
     ax.scatter(open_position.index, open_position, marker=".", s=ARROW_SIZE, color="g")
     for index, value in open_position.iteritems():
         ax.annotate(
-            text=round(value),
+            text=round(value, 2),
             xy=(index, value),
             xytext=VALUE_OFFSET,
             textcoords="offset points",
@@ -25,7 +25,7 @@ def plot_price(df: pd.DataFrame) -> Figure:
     ax.scatter(close_position.index, close_position, marker=".", s=ARROW_SIZE, color="r")
     for index, value in close_position.iteritems():
         ax.annotate(
-            text=round(value),
+            text=round(value, 2),
             xy=(index, value),
             xytext=VALUE_OFFSET,
             textcoords="offset points",
