@@ -11,7 +11,6 @@ def plot_ewm_signals(df: pd.DataFrame) -> Figure:
     # ax.plot(df.index, df["Close"])
     ax.plot(df.index, df["SMA_10"])
     ax.plot(df.index, df["SMA_20"])
-    ax.plot(df.index, df["SMA_100"])
 
     open_position = df[df["position"] == 1]["SMA_10"]
     ax.scatter(open_position.index, open_position, marker="^", s=ARROW_SIZE, color="g")
@@ -26,6 +25,6 @@ def plot_ewm_signals(df: pd.DataFrame) -> Figure:
     )
     ax.set_xticks(x_axis_dates)
     ax.tick_params(axis="x", rotation=X_ROTATION)
-    ax.legend(["SMA_10", "SMA_20", "SMA_100", "Buy", "Sell"])
+    ax.legend(["SMA_10", "SMA_20", "Buy", "Sell"])
     ax.grid()
     return fig
