@@ -30,7 +30,7 @@ def render_sidebar() -> (str, str, str):
     )
     end_date = st.sidebar.date_input(
         label="End date:",
-        value=datetime(2021, 9, 20),
+        value=datetime.now(),
         max_value=datetime.now()
     )
     return ticker, start_date, end_date
