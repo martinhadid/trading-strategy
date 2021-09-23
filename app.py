@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 
 import pandas as pd
 import streamlit as st
@@ -12,8 +12,7 @@ from visualization.ewm_crossover_signals import plot_ewm_signals
 from visualization.price import plot_price
 from visualization.stochastic_oscillator_signals import plot_stochastic_oscillator_signals
 
-st.set_page_config(layout="wide", initial_sidebar_state="auto",
-                   page_title="Trading Stategy")
+st.set_page_config(layout="wide", page_title="Trading Stategy")
 
 
 @st.cache(allow_output_mutation=True)
@@ -24,21 +23,27 @@ def request_ticker(ticker_name: str) -> pd.DataFrame:
 def render_sidebar() -> (str, str, str):
     st.sidebar.title(body="Configuration")
     ticker = st.sidebar.selectbox(label="Select one symbol", options=STOCKS)
-    start_date = st.sidebar.date_input(label="Start date:", value=datetime(2021, 3, 20))
-    end_date = st.sidebar.date_input(label="End date:", value=datetime(2021, 9, 20))
+    start_date = st.sidebar.date_input(
+        label="Start date:",
+        value=datetime(2021, 3, 20),
+        min_value=datetime.now() - timedelta(days=5 * 365)
+    )
+    end_date = st.sidebar.date_input(
+        label="End date:",
+        value=datetime(2021, 9, 20),
+        max_value=datetime.now()
+    )
     return ticker, start_date, end_date
 
 
 def render_price(chart_data: pd.DataFrame):
-    st.markdown("<h1 style='text-align: center;'>Close Price</h1>",
-                unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align: center;'>Close Price</h1>", unsafe_allow_html=True)
     fig = plot_price(df=chart_data)
     st.pyplot(fig)
 
 
 def render_ewm_signals(chart_data: pd.DataFrame):
-    st.markdown("<h1 style='text-align: center;'>EMA Crossover</h1>",
-                unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align: center;'>EMA Crossover</h1>", unsafe_allow_html=True)
     fig = plot_ewm_signals(df=chart_data)
     st.pyplot(fig)
 

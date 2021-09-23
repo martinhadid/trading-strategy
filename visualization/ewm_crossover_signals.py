@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from matplotlib.figure import Figure
 
-from visualization.utils import get_x_axis_dates, X_ROTATION, FIG_SIZE, ARROW_SIZE
+from utils.plots import get_x_axis_dates, X_ROTATION, FIG_SIZE, ARROW_SIZE
 
 
 def plot_ewm_signals(df: pd.DataFrame) -> Figure:

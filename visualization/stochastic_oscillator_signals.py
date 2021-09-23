@@ -2,7 +2,7 @@ import pandas as pd
 from matplotlib import pyplot as plt
 from matplotlib.figure import Figure
 
-from visualization.utils import FIG_SIZE
+from utils.plots import FIG_SIZE
 
 
 def plot_stochastic_oscillator_signals(df: pd.DataFrame) -> Figure:

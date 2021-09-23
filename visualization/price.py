@@ -2,7 +2,7 @@ import pandas as pd
 from matplotlib import pyplot as plt
 from matplotlib.figure import Figure
 
-from visualization.utils import get_x_axis_dates, FIG_SIZE, VALUE_OFFSET, X_ROTATION, \
+from utils.plots import get_x_axis_dates, FIG_SIZE, VALUE_OFFSET, X_ROTATION, \
     ARROW_SIZE
 
 
