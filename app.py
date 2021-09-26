@@ -8,10 +8,10 @@ from repositories.data.signal import Signal
 from repositories.data.stochastic_oscillator import StochasticOscillator
 from repositories.data.stock import Stock
 from repositories.fetch_data import request_ticker
-from trading.ema_crossover_strategy import ema_crossover
-from visualization.ewm_crossover_signals import plot_ema_crossover
+from trading.ema_crossover import ema_crossover
+from visualization.ema_crossover import plot_ema_crossover
 from visualization.price import plot_price
-from visualization.stochastic_oscillator_signals import plot_stochastic_oscillator
+from visualization.stochastic_oscillator import plot_stochastic_oscillator
 
 st.set_page_config(layout="wide", page_title="Trading Strategy")
 
