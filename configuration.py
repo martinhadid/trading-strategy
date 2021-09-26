@@ -11,6 +11,7 @@ STOCKS = (
     "ROKU",
     "SQ",
     "TSLA",
+    "TX",
     "V",
     "ZM"
 )

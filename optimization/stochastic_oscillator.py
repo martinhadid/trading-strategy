@@ -1,4 +1,8 @@
+import numpy as np
 import pandas as pd
+
+from repositories.data.stochastic_oscillator import StochasticOscillator
+from repositories.data.stock import Stock
 
 """
 https://www.metastock.com/customer/resources/taaz/?p=106
@@ -18,30 +22,27 @@ K_SLOWING_PERIODS = 6
 D_TIME_PERIODS = 3
 
 
-def stochastic_oscillator(df: pd.DataFrame) -> pd.DataFrame:
-    df["K_High"] = df["High"].rolling(
-        window=K_TIME_PERIODS,
-        min_periods=1
-    ).max()
+def stochastic_oscillator_optimization(stock_close: Stock, stock_high: Stock,
+                                       stock_low: Stock) -> StochasticOscillator:
+    k_high = stock_high.moving_max(periods=K_TIME_PERIODS, name="sma_14_high")
+    k_low = stock_low.moving_min(periods=K_TIME_PERIODS, name="sma_14_low")
 
-    df["K_Low"] = df["Low"].rolling(
-        window=K_TIME_PERIODS,
-        min_periods=1
-    ).min()
+    price_low_difference = stock_close.price - k_low
+    high_low_difference = k_high - k_low
 
-    price_low_difference = df["Close"] - df["K_Low"]
-    high_low_difference = df["K_High"] - df["K_Low"]
+    price_low_diff_sum = price_low_difference.rolling(window=K_SLOWING_PERIODS).sum()
+    high_low_diff_sum = high_low_difference.rolling(window=K_SLOWING_PERIODS).sum()
 
-    price_low_difference_sum = price_low_difference.rolling(
-        window=K_SLOWING_PERIODS,
-        min_periods=1
-    ).sum()
+    k = 100 * price_low_diff_sum / high_low_diff_sum
+    d = k.ewm(span=D_TIME_PERIODS, adjust=False).mean()
 
-    high_low_difference_sum = high_low_difference.rolling(
-        window=K_SLOWING_PERIODS,
-        min_periods=1
-    ).sum()
+    assert all(k.index == d.index)
 
-    df["%K"] = 100 * price_low_difference_sum / high_low_difference_sum
-    df["%D"] = df["%K"].ewm(span=D_TIME_PERIODS, adjust=False).mean()
-    return df
+    return StochasticOscillator(
+        k=k,
+        d=d,
+        crossover=pd.Series(
+            data=np.where(k > d, 1, 0),
+            index=k.index
+        ).diff()
+    )
