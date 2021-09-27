@@ -10,14 +10,15 @@ def plot_stochastic_oscillator(strategy: pd.DataFrame, start_date: str,
     fig, ax = plt.subplots(figsize=FIG_SIZE)
     strategy = strategy.loc[start_date: end_date]
 
-    k = strategy.loc[:, "k"]
-    d = strategy.loc[:, "d"]
+    k = strategy["k"]
+    d = strategy["d"]
 
     ax.plot(k)
     ax.plot(d, linestyle="--")
     ax.axhline(y=30, color="r", linestyle="-")
 
-    open_position_index = strategy.loc[strategy["crossover"] == 1].index
+    positions = strategy["crossover"]
+    open_position_index = positions[positions == 1].index
     ax.scatter(
         x=open_position_index,
         y=k[open_position_index],
@@ -26,7 +27,7 @@ def plot_stochastic_oscillator(strategy: pd.DataFrame, start_date: str,
         color="g"
     )
 
-    close_position_index = strategy.loc[strategy["crossover"] == -1].index
+    close_position_index = positions[positions == -1].index
     ax.scatter(
         x=close_position_index,
         y=k[close_position_index],

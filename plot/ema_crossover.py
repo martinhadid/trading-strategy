@@ -8,23 +8,26 @@ from plot.settings import X_ROTATION, FIG_SIZE, ARROW_SIZE
 def plot_ema(strategy: pd.DataFrame, start_date: str, end_date: str) -> Figure:
     fig, ax = plt.subplots(figsize=FIG_SIZE)
     strategy = strategy.loc[start_date:end_date]
-    ax.plot(strategy["ema_10"])
-    ax.plot(strategy["ema_20"])
+
+    ema_10 = strategy["ema_10"]
+    ema_20 = strategy["ema_20"]
+
+    ax.plot(ema_10)
+    ax.plot(ema_20)
 
     positions = strategy["crossover"]
     open_position_index = positions[positions == 1].index
     ax.scatter(
         x=open_position_index,
-        y=strategy["ema_10"][open_position_index],
+        y=ema_10[open_position_index],
         marker="^",
         s=ARROW_SIZE,
         color="g"
     )
-
     close_position_index = positions[positions == -1].index
     ax.scatter(
         x=close_position_index,
-        y=strategy["ema_10"][close_position_index],
+        y=ema_10[close_position_index],
         marker="v",
         s=ARROW_SIZE,
         color="r"

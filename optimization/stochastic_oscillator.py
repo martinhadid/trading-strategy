@@ -1,7 +1,7 @@
 import pandas as pd
 
-from utils import moving_max, moving_min, moving_sum, exponential_moving_average, \
-    crossover
+from utils import (moving_max, moving_min, moving_sum, exponential_moving_average,
+                   crossover)
 
 """
 https://www.metastock.com/customer/resources/taaz/?p=106
@@ -29,23 +29,19 @@ def stochastic_oscillator_optimization(stock: pd.DataFrame) -> pd.DataFrame:
     k_high = moving_max(price=high_price, days=K_TIME_PERIODS, name="sma_14_high")
     k_low = moving_min(price=low_price, days=K_TIME_PERIODS, name="sma_14_low")
 
-    price_low_difference = close_price - k_low
-    high_low_difference = k_high - k_low
-
     price_low_diff_sum = moving_sum(
-        price=price_low_difference,
+        price=close_price - k_low,
         days=K_SLOWING_PERIODS,
         name="price_low_diff_sum"
     )
     high_low_diff_sum = moving_sum(
-        price=high_low_difference,
+        price=k_high - k_low,
         days=K_SLOWING_PERIODS,
         name="high_low_diff_sum"
     )
 
     k = pd.Series(data=100 * price_low_diff_sum / high_low_diff_sum, name="k")
     d = exponential_moving_average(price=k, days=D_TIME_PERIODS, name="d")
-
     assert all(k.index == d.index)
 
     return crossover(fast=k, slow=d)
