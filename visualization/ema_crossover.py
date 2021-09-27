@@ -2,22 +2,20 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from matplotlib.figure import Figure
 
-from repositories.data.signal import Signal
 from visualization.settings import X_ROTATION, FIG_SIZE, ARROW_SIZE
 
 
-def plot_ema_crossover(signal: Signal, start_date: str, end_date: str) -> Figure:
+def plot_ema_crossover(strategy: pd.DataFrame, start_date: str, end_date: str) -> Figure:
     fig, ax = plt.subplots(figsize=FIG_SIZE)
-    ema_10 = signal.ema_10.loc[start_date:end_date]
-    ema_20 = signal.ema_20.loc[start_date:end_date]
-    ax.plot(ema_10)
-    ax.plot(ema_20)
+    strategy = strategy.loc[start_date:end_date]
+    ax.plot(strategy["ema_10"])
+    ax.plot(strategy["ema_20"])
 
-    positions = signal.crossover.loc[start_date:end_date]
+    positions = strategy["crossover"]
     open_position_index = positions[positions == 1].index
     ax.scatter(
         x=open_position_index,
-        y=signal.ema_10[open_position_index],
+        y=strategy["ema_10"][open_position_index],
         marker="^",
         s=ARROW_SIZE,
         color="g"
@@ -26,7 +24,7 @@ def plot_ema_crossover(signal: Signal, start_date: str, end_date: str) -> Figure
     close_position_index = positions[positions == -1].index
     ax.scatter(
         x=close_position_index,
-        y=signal.ema_10[close_position_index],
+        y=strategy["ema_10"][close_position_index],
         marker="v",
         s=ARROW_SIZE,
         color="r"

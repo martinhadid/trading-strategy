@@ -2,35 +2,34 @@ import pandas as pd
 from matplotlib import pyplot as plt
 from matplotlib.figure import Figure
 
-from repositories.data.stochastic_oscillator import StochasticOscillator
 from visualization.settings import FIG_SIZE, X_ROTATION, ARROW_SIZE
 
 
-def plot_stochastic_oscillator(oscillator: StochasticOscillator, start_date: str,
+def plot_stochastic_oscillator(strategy: pd.DataFrame, start_date: str,
                                end_date: str) -> Figure:
     fig, ax = plt.subplots(figsize=FIG_SIZE)
+    strategy = strategy.loc[start_date: end_date]
 
-    k = oscillator.k.loc[start_date:end_date]
-    d = oscillator.d.loc[start_date:end_date]
+    k = strategy.loc[:, "k"]
+    d = strategy.loc[:, "d"]
 
     ax.plot(k)
     ax.plot(d, linestyle="--")
     ax.axhline(y=30, color="r", linestyle="-")
 
-    positions = oscillator.crossover.loc[start_date:end_date]
-    open_position_index = positions[positions == 1].index
+    open_position_index = strategy.loc[strategy["crossover"] == 1].index
     ax.scatter(
         x=open_position_index,
-        y=oscillator.k[open_position_index],
+        y=k[open_position_index],
         marker="^",
         s=ARROW_SIZE,
         color="g"
     )
 
-    close_position_index = positions[positions == -1].index
+    close_position_index = strategy.loc[strategy["crossover"] == -1].index
     ax.scatter(
         x=close_position_index,
-        y=oscillator.k[close_position_index],
+        y=k[close_position_index],
         marker="v",
         s=ARROW_SIZE,
         color="r"

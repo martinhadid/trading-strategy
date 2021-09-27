@@ -1,8 +1,7 @@
-import numpy as np
 import pandas as pd
 
-from repositories.data.stochastic_oscillator import StochasticOscillator
-from repositories.data.stock import Stock
+from utils import moving_max, moving_min, moving_sum, exponential_moving_average, \
+    crossover
 
 """
 https://www.metastock.com/customer/resources/taaz/?p=106
@@ -22,27 +21,31 @@ K_SLOWING_PERIODS = 6
 D_TIME_PERIODS = 3
 
 
-def stochastic_oscillator_optimization(stock_close: Stock, stock_high: Stock,
-                                       stock_low: Stock) -> StochasticOscillator:
-    k_high = stock_high.moving_max(periods=K_TIME_PERIODS, name="sma_14_high")
-    k_low = stock_low.moving_min(periods=K_TIME_PERIODS, name="sma_14_low")
+def stochastic_oscillator_optimization(stock: pd.DataFrame) -> pd.DataFrame:
+    close_price = stock.loc[:, "Close"]
+    high_price = stock.loc[:, "High"]
+    low_price = stock.loc[:, "Low"]
 
-    price_low_difference = stock_close.price - k_low
+    k_high = moving_max(price=high_price, days=K_TIME_PERIODS, name="sma_14_high")
+    k_low = moving_min(price=low_price, days=K_TIME_PERIODS, name="sma_14_low")
+
+    price_low_difference = close_price - k_low
     high_low_difference = k_high - k_low
 
-    price_low_diff_sum = price_low_difference.rolling(window=K_SLOWING_PERIODS).sum()
-    high_low_diff_sum = high_low_difference.rolling(window=K_SLOWING_PERIODS).sum()
+    price_low_diff_sum = moving_sum(
+        price=price_low_difference,
+        days=K_SLOWING_PERIODS,
+        name="price_low_diff_sum"
+    )
+    high_low_diff_sum = moving_sum(
+        price=high_low_difference,
+        days=K_SLOWING_PERIODS,
+        name="high_low_diff_sum"
+    )
 
-    k = 100 * price_low_diff_sum / high_low_diff_sum
-    d = k.ewm(span=D_TIME_PERIODS, adjust=False).mean()
+    k = pd.Series(data=100 * price_low_diff_sum / high_low_diff_sum, name="k")
+    d = exponential_moving_average(price=k, days=D_TIME_PERIODS, name="d")
 
     assert all(k.index == d.index)
 
-    return StochasticOscillator(
-        k=k,
-        d=d,
-        crossover=pd.Series(
-            data=np.where(k > d, 1, 0),
-            index=k.index
-        ).diff()
-    )
+    return crossover(fast=k, slow=d)
