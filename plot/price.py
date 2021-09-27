@@ -3,7 +3,7 @@ from matplotlib import pyplot as plt
 from matplotlib.figure import Figure
 
 from utils import exponential_moving_average
-from visualization.settings import X_ROTATION, FIG_SIZE
+from plot.settings import X_ROTATION, FIG_SIZE
 
 
 def plot_price(stock: pd.DataFrame, start_date: str, end_date: str) -> Figure:

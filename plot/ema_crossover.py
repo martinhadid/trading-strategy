@@ -2,10 +2,10 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from matplotlib.figure import Figure
 
-from visualization.settings import X_ROTATION, FIG_SIZE, ARROW_SIZE
+from plot.settings import X_ROTATION, FIG_SIZE, ARROW_SIZE
 
 
-def plot_ema_crossover(strategy: pd.DataFrame, start_date: str, end_date: str) -> Figure:
+def plot_ema(strategy: pd.DataFrame, start_date: str, end_date: str) -> Figure:
     fig, ax = plt.subplots(figsize=FIG_SIZE)
     strategy = strategy.loc[start_date:end_date]
     ax.plot(strategy["ema_10"])

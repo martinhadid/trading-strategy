@@ -2,7 +2,7 @@ import pandas as pd
 from matplotlib import pyplot as plt
 from matplotlib.figure import Figure
 
-from visualization.settings import FIG_SIZE, X_ROTATION, ARROW_SIZE
+from plot.settings import FIG_SIZE, X_ROTATION, ARROW_SIZE
 
 
 def plot_stochastic_oscillator(strategy: pd.DataFrame, start_date: str,

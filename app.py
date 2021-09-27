@@ -7,9 +7,9 @@ from API.fetch_data import request_ticker
 from configuration import STOCKS
 from optimization.stochastic_oscillator import stochastic_oscillator_optimization
 from trading.ema_crossover import ema_crossover_strategy
-from visualization.ema_crossover import plot_ema_crossover
-from visualization.price import plot_price
-from visualization.stochastic_oscillator_crossover import plot_stochastic_oscillator
+from plot.ema_crossover import plot_ema
+from plot.price import plot_price
+from plot.stochastic_oscillator_crossover import plot_stochastic_oscillator
 
 st.set_page_config(layout="wide", page_title="Trading Strategy")
 
@@ -43,7 +43,7 @@ def render_ema_crossover(stock: pd.DataFrame, start_date: str, end_date: str):
     st.markdown("<h1 style='text-align: center;'>EMA Crossover</h1>",
                 unsafe_allow_html=True)
     crossover = ema_crossover_strategy(stock=stock)
-    fig = plot_ema_crossover(strategy=crossover, start_date=start_date, end_date=end_date)
+    fig = plot_ema(strategy=crossover, start_date=start_date, end_date=end_date)
     st.pyplot(fig)
 
 
