@@ -15,7 +15,8 @@ def plot_stochastic_oscillator(strategy: pd.DataFrame, start_date: str,
 
     ax.plot(k)
     ax.plot(d, linestyle="--")
-    ax.axhline(y=30, color="r", linestyle="-")
+    ax.axhline(y=30, color="k", linestyle="-")
+    ax.axhline(y=70, color="k", linestyle="-")
 
     positions = strategy["crossover"]
     open_position_index = positions[positions == 1].index
@@ -39,7 +40,7 @@ def plot_stochastic_oscillator(strategy: pd.DataFrame, start_date: str,
     x_axis_dates = open_position_index.union(close_position_index).union(date_range)
     ax.set_xticks(x_axis_dates)
     ax.tick_params(axis="x", rotation=X_ROTATION)
-    ax.legend(["%K", "%D", "Oversold", "Buy", "Sell"])
+    ax.legend(["%K", "%D", "Oversold", "Overbought", "Buy", "Sell"])
     return fig
 
     # volume

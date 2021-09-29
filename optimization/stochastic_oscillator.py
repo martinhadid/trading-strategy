@@ -22,9 +22,9 @@ D_TIME_PERIODS = 3
 
 
 def stochastic_oscillator_optimization(stock: pd.DataFrame) -> pd.DataFrame:
-    close_price = stock.loc[:, "Close"]
-    high_price = stock.loc[:, "High"]
-    low_price = stock.loc[:, "Low"]
+    close_price = stock["Close"]
+    high_price = stock["High"]
+    low_price = stock["Low"]
 
     k_high = moving_max(price=high_price, days=K_TIME_PERIODS, name="sma_14_high")
     k_low = moving_min(price=low_price, days=K_TIME_PERIODS, name="sma_14_low")
