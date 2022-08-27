@@ -13,6 +13,9 @@ STOCKS = (
     "TSLA",
     "TX",
     "V",
+    "VGT",
+    "VOO",
+    "VT,
     "ZM"
 )
 STOP_LOSS = 0.06
