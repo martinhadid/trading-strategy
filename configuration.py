@@ -15,7 +15,7 @@ STOCKS = (
     "V",
     "VGT",
     "VOO",
-    "VT,
+    "VT",
     "ZM"
 )
 STOP_LOSS = 0.06
