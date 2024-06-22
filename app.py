@@ -4,10 +4,11 @@ import pandas as pd
 import streamlit as st
 
 from API.fetch_data import request_ticker
-from configuration import STOCKS
-from optimization.fibonacci_retracements import fibonacci_retracements_optimization
+from optimization.fibonacci_retracements import \
+    fibonacci_retracements_optimization
 from optimization.rsi import relative_strength_index
-from optimization.stochastic_oscillator import stochastic_oscillator_optimization
+from optimization.stochastic_oscillator import \
+    stochastic_oscillator_optimization
 from plot.ema_crossover import plot_ema
 from plot.fibonacci_retracements import plot_fibonacci_retracements
 from plot.price import plot_price
@@ -20,11 +21,11 @@ st.set_page_config(layout="wide", page_title="Trading Strategy")
 
 def render_sidebar() -> (str, str, str):
     st.sidebar.title(body="Configuration")
-    ticker = st.sidebar.selectbox(label="Select symbol", options=STOCKS)
+    ticker = st.sidebar.text_input(label="Select symbol", value="QQQ")
     now = datetime.now()
     start_date = st.sidebar.date_input(
         label="Start date:",
-        value=datetime(2021, 3, 1),
+        value=datetime(2023, 3, 1),
         min_value=datetime(2015, 1, 1),
         max_value=now
     )
@@ -38,7 +39,8 @@ def render_sidebar() -> (str, str, str):
 
 
 def render_price(stock: pd.DataFrame, start_date: str, end_date: str):
-    st.markdown("<h1 style='text-align: center;'>Price</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align: center;'>Price</h1>",
+                unsafe_allow_html=True)
     fig = plot_price(stock=stock, start_date=start_date, end_date=end_date)
     st.pyplot(fig)
 
@@ -51,7 +53,8 @@ def render_ema_crossover(stock: pd.DataFrame, start_date: str, end_date: str):
     st.pyplot(fig)
 
 
-def render_oscillator_crossover(stock: pd.DataFrame, start_date: str, end_date: str):
+def render_oscillator_crossover(stock: pd.DataFrame, start_date: str,
+                                end_date: str):
     st.markdown("<h1 style='text-align: center;'>Stochastic Oscillator</h1>",
                 unsafe_allow_html=True)
     stochastic_oscillator = stochastic_oscillator_optimization(stock=stock)
@@ -60,7 +63,8 @@ def render_oscillator_crossover(stock: pd.DataFrame, start_date: str, end_date: 
     st.pyplot(fig)
 
 
-def render_fibonacci_retracements(stock: pd.DataFrame, start_date: str, end_date: str):
+def render_fibonacci_retracements(stock: pd.DataFrame, start_date: str,
+                                  end_date: str):
     st.markdown("<h1 style='text-align: center;'>Fibonacci Retracements</h1>",
                 unsafe_allow_html=True)
     fibonacci_retracements = fibonacci_retracements_optimization(stock=stock)
@@ -70,7 +74,8 @@ def render_fibonacci_retracements(stock: pd.DataFrame, start_date: str, end_date
 
 
 def render_rsi(stock: pd.DataFrame, start_date: str, end_date: str):
-    st.markdown("<h1 style='text-align: center;'>RSI</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align: center;'>RSI</h1>",
+                unsafe_allow_html=True)
     rsi = relative_strength_index(stock=stock)
     fig = plot_rsi(strategy=rsi, start_date=start_date, end_date=end_date)
     st.pyplot(fig)
@@ -83,7 +88,7 @@ def app():
     render_price(stock=stock, start_date=start_date, end_date=end_date)
     render_ema_crossover(stock=stock, start_date=start_date, end_date=end_date)
     render_oscillator_crossover(stock=stock, start_date=start_date, end_date=end_date)
-    render_fibonacci_retracements(stock=stock, start_date=start_date, end_date=end_date)
+    # render_fibonacci_retracements(stock=stock, start_date=start_date, end_date=end_date)
 
 
 if __name__ == "__main__":

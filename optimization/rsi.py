@@ -10,7 +10,7 @@ def _wilder_smoothing(values: pd.Series, initial_avg: float, name: str) -> pd.Se
     avg_values = [None] * PERIODS
     avg_values.append(initial_avg)
 
-    for _, value in values[PERIODS + 1:].iteritems():
+    for _, value in values[PERIODS + 1:].items():
         avg = (initial_avg * (PERIODS - 1) + value) / PERIODS
         avg_values.append(avg)
         initial_avg = avg
