@@ -25,7 +25,7 @@ def render_sidebar() -> (str, str, str):
     now = datetime.now()
     start_date = st.sidebar.date_input(
         label="Start date:",
-        value=datetime(2023, 3, 1),
+        value=datetime(2024, 3, 1),
         min_value=datetime(2015, 1, 1),
         max_value=now
     )
