@@ -1,8 +1,13 @@
+"""Relative strength index module."""
+
 import pandas as pd
 
-from utils import moving_diff, moving_average
+from trading_strategy.config import config_parser
+from trading_strategy.utils import moving_average
+from trading_strategy.utils import moving_diff
 
-PERIODS = 14
+config = config_parser.parse_from_file(config_file="config.toml")
+PERIODS = config.optimizations.rsi.period
 
 
 def _wilder_smoothing(values: pd.Series, initial_avg: float, name: str) -> pd.Series:
@@ -10,7 +15,7 @@ def _wilder_smoothing(values: pd.Series, initial_avg: float, name: str) -> pd.Se
     avg_values = [None] * PERIODS
     avg_values.append(initial_avg)
 
-    for _, value in values[PERIODS + 1:].items():
+    for _, value in values[PERIODS + 1 :].items():
         avg = (initial_avg * (PERIODS - 1) + value) / PERIODS
         avg_values.append(avg)
         initial_avg = avg
@@ -25,27 +30,17 @@ def relative_strength_index(stock: pd.DataFrame) -> pd.Series:
     assert all(gain.index == loss.index)
 
     init_avg_gain = moving_average(
-        price=gain,
-        days=PERIODS,
-        min_periods=PERIODS,
-        name="average_gain"
+        price=gain, days=PERIODS, min_periods=PERIODS, name="average_gain"
     ).iloc[PERIODS]
     init_avg_loss = moving_average(
-        price=loss,
-        days=PERIODS,
-        min_periods=PERIODS,
-        name="average_loss"
+        price=loss, days=PERIODS, min_periods=PERIODS, name="average_loss"
     ).iloc[PERIODS]
 
     wilder_smoothing_avg_gain = _wilder_smoothing(
-        values=gain,
-        initial_avg=init_avg_gain,
-        name="avg_gain"
+        values=gain, initial_avg=init_avg_gain, name="avg_gain"
     )
     wilder_smoothing_avg_loss = _wilder_smoothing(
-        values=loss,
-        initial_avg=init_avg_loss,
-        name="avg_loss"
+        values=loss, initial_avg=init_avg_loss, name="avg_loss"
     )
 
     rs = wilder_smoothing_avg_gain / wilder_smoothing_avg_loss
@@ -53,5 +48,5 @@ def relative_strength_index(stock: pd.DataFrame) -> pd.Series:
 
 
 if __name__ == "__main__":
-    df = pd.read_csv('../test/rsi.csv')
+    df = pd.read_csv("../test/rsi.csv")
     print(relative_strength_index(df))

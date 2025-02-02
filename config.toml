@@ -1,0 +1,20 @@
+[project]
+stop_loss = 0.06
+
+[data]
+interval = "1d"
+period = "5y"
+
+[plots]
+arrow_size = 150
+fig_size = [25, 3]
+value_offset = [5, 25]
+x_rotation = 90
+
+[optimizations.rsi]
+period = 14
+
+[optimizations.stochastic_oscillator]
+d_time_periods = 3
+k_slowing_periods = 6
+k_time_periods = 14

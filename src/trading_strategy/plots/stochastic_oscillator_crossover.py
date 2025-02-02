@@ -1,14 +1,19 @@
-import pandas as pd
 from matplotlib import pyplot as plt
 from matplotlib.figure import Figure
+import pandas as pd
 
-from plot.settings import FIG_SIZE, X_ROTATION, ARROW_SIZE
+from trading_strategy.config import config_parser
+
+config = config_parser.parse_from_file(config_file="config.toml")
 
 
-def plot_stochastic_oscillator(strategy: pd.DataFrame, start_date: str,
-                               end_date: str) -> Figure:
-    fig, ax = plt.subplots(figsize=FIG_SIZE)
-    strategy = strategy.loc[start_date: end_date]
+def plot_stochastic_oscillator(
+    strategy: pd.DataFrame,
+    start_date: str,
+    end_date: str,
+) -> Figure:
+    fig, ax = plt.subplots(figsize=config.plots.fig_size)
+    strategy = strategy.loc[start_date:end_date]
 
     k = strategy["k"]
     d = strategy["d"]
@@ -24,8 +29,8 @@ def plot_stochastic_oscillator(strategy: pd.DataFrame, start_date: str,
         x=open_position_index,
         y=k[open_position_index],
         marker="^",
-        s=ARROW_SIZE,
-        color="g"
+        s=config.plots.arrow_size,
+        color="g",
     )
 
     close_position_index = positions[positions == -1].index
@@ -33,16 +38,12 @@ def plot_stochastic_oscillator(strategy: pd.DataFrame, start_date: str,
         x=close_position_index,
         y=k[close_position_index],
         marker="v",
-        s=ARROW_SIZE,
-        color="r"
+        s=config.plots.arrow_size,
+        color="r",
     )
     date_range = pd.date_range(start=start_date, end=end_date, freq="MS")
     x_axis_dates = open_position_index.union(close_position_index).union(date_range)
     ax.set_xticks(x_axis_dates)
-    ax.tick_params(axis="x", rotation=X_ROTATION)
+    ax.tick_params(axis="x", rotation=config.plots.x_rotation)
     ax.legend(["%K", "%D", "Oversold", "Overbought", "Buy", "Sell"])
     return fig
-
-    # volume
-    # ax2 = ax.twinx()
-    # ax2.bar(x=df.index, height=df["Volume"])
