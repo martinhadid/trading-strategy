@@ -1,3 +1,5 @@
+import datetime
+
 from matplotlib import pyplot as plt
 from matplotlib.figure import Figure
 import pandas as pd
@@ -8,7 +10,9 @@ from trading_strategy.utils import exponential_moving_average
 config = config_parser.parse_from_file(config_file="config.toml")
 
 
-def plot_price(stock: pd.DataFrame, start_date: str, end_date: str) -> Figure:
+def plot_price(
+    stock: pd.DataFrame, start_date: datetime.date, end_date: datetime.date
+) -> Figure:
     fig, ax = plt.subplots(figsize=config.plots.fig_size)
     close_price = stock["Close"]
     ema_100 = exponential_moving_average(price=close_price, days=100, name="price")

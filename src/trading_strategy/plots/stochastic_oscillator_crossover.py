@@ -1,3 +1,5 @@
+import datetime
+
 from matplotlib import pyplot as plt
 from matplotlib.figure import Figure
 import pandas as pd
@@ -9,8 +11,8 @@ config = config_parser.parse_from_file(config_file="config.toml")
 
 def plot_stochastic_oscillator(
     strategy: pd.DataFrame,
-    start_date: str,
-    end_date: str,
+    start_date: datetime.date,
+    end_date: datetime.date,
 ) -> Figure:
     fig, ax = plt.subplots(figsize=config.plots.fig_size)
     strategy = strategy.loc[start_date:end_date]

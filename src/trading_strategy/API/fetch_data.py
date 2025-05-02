@@ -15,6 +15,5 @@ def request_ticker(ticker_name: str) -> pd.DataFrame:
     return yf.download(
         tickers=ticker_name,
         period=config.data.period,
-        interval=config.data.interval,
         multi_level_index=False,
     )

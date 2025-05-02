@@ -1,12 +1,12 @@
 [project]
 authors = [{ name = "martinhadid", email = "martinhadid@gmail.com" }]
 dependencies = [
-    "dacite>=1.9.1",
-    "matplotlib>=3.10.0",
-    "numpy>=2.2.2",
+    "dacite>=1.9.2",
+    "matplotlib>=3.10.1",
+    "numpy>=2.2.5",
     "pandas>=2.2.3",
-    "streamlit>=1.41.1",
-    "yfinance>=0.2.52",
+    "streamlit>=1.45.0",
+    "yfinance>=0.2.57",
 ]
 description = "Add your description here"
 name = "trading-strategy"
@@ -19,7 +19,9 @@ build-backend = "hatchling.build"
 requires = ["hatchling"]
 
 [dependency-groups]
-dev = ["pre-commit>=4.1.0"]
+dev = [
+    "pre-commit>=4.2.0",
+]
 
 [project.scripts]
 app = "trading_strategy.app:main"

@@ -10,11 +10,9 @@ class DataConfigSpec:
 
     Attributes:
         period (int): amount of data to download.
-        interval (str): frequency of the data to download.
     """
 
     period: str = "5y"
-    interval: str = "1d"
 
 
 @dataclasses.dataclass
@@ -31,8 +29,8 @@ class PlotsConfigSpec:
     """
 
     x_rotation: int = 90
-    value_offset: list[int, int] = (5, 25)
-    fig_size: list[int, int] = (25, 3)
+    value_offset: list[int] | tuple[int, int] = (5, 25)
+    fig_size: list[int] | tuple[int, int] = (25, 3)
     arrow_size: int = 150
 
     def __post_init__(self):

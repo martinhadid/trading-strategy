@@ -1,6 +1,6 @@
 """Main app."""
 
-from datetime import datetime
+import datetime
 
 from matplotlib.figure import Figure
 import streamlit as st
@@ -16,17 +16,19 @@ from trading_strategy.plots.stochastic_oscillator_crossover import (
 )
 from trading_strategy.trading.ema_crossover import ema_crossover
 
+_DEFAULT_TICKER = "QQQ"
+
 st.set_page_config(layout="wide", page_title="Trading Strategy")
 
 
-def _render_sidebar() -> tuple[str, str, str]:
+def _render_sidebar() -> tuple[str, datetime.date, datetime.date]:
     st.sidebar.title("Configuration")
-    ticker = st.sidebar.text_input("Select symbol", "QQQ")
-    now = datetime.now()
+    ticker = st.sidebar.text_input("Select symbol", _DEFAULT_TICKER)
+    now = datetime.datetime.now()
     start_date = st.sidebar.date_input(
         label="Start date:",
-        value=datetime(2024, 3, 1),
-        min_value=datetime(2015, 1, 1),
+        value=datetime.date(2024, 3, 1),
+        min_value=datetime.date(2015, 1, 1),
         max_value=now,
     )
     end_date = st.sidebar.date_input(
@@ -41,7 +43,7 @@ def _render_section(title: str, fig: Figure) -> None:
     st.pyplot(fig)
 
 
-def main():
+def main() -> None:
     """App entrypoint."""
     ticker, start_date, end_date = _render_sidebar()
     stock = fetch_data.request_ticker(ticker_name=ticker)
