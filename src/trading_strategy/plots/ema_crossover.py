@@ -1,3 +1,5 @@
+"""Plot for ema crossover."""
+
 import datetime
 
 from matplotlib.figure import Figure
@@ -12,6 +14,16 @@ config = config_parser.parse_from_file(config_file="config.toml")
 def plot_ema(
     strategy: pd.DataFrame, start_date: datetime.date, end_date: datetime.date
 ) -> Figure:
+    """Plots the Exponential Moving Averages (EMA) and crossover signals for a trading strategy.
+
+    Args:
+        strategy (pd.DataFrame): A DataFrame containing the strategy data, including 'ema_10', 'ema_20', and 'crossover' columns.
+        start_date (datetime.date): The start date for plotting the data.
+        end_date (datetime.date): The end date for plotting the data.
+
+    Returns:
+        Figure: A matplotlib Figure object displaying the EMA lines and buy/sell signals.
+    """
     fig, ax = plt.subplots(figsize=config.plots.fig_size)
     strategy = strategy.loc[start_date:end_date]
 

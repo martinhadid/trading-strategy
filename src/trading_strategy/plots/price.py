@@ -1,3 +1,5 @@
+"""Plot for stock price with exponential moving average."""
+
 import datetime
 
 from matplotlib import pyplot as plt
@@ -13,6 +15,16 @@ config = config_parser.parse_from_file(config_file="config.toml")
 def plot_price(
     stock: pd.DataFrame, start_date: datetime.date, end_date: datetime.date
 ) -> Figure:
+    """Plots the stock's closing price along with 100-day and 200-day Exponential Moving Averages (EMAs).
+
+    Args:
+        stock (pd.DataFrame): A DataFrame containing stock data, expected to have a 'Close' column.
+        start_date (datetime.date): The start date for plotting the data.
+        end_date (datetime.date): The end date for plotting the data.
+
+    Returns:
+        Figure: A matplotlib Figure object displaying the closing price and the two EMA lines.
+    """
     fig, ax = plt.subplots(figsize=config.plots.fig_size)
     close_price = stock["Close"]
     ema_100 = exponential_moving_average(price=close_price, days=100, name="price")

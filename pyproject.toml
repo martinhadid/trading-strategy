@@ -20,8 +20,40 @@ requires = ["hatchling"]
 
 [dependency-groups]
 dev = [
+    "parameterized>=0.9.0",
     "pre-commit>=4.2.0",
+    "pytest>=8.3.5",
+    "ruff>=0.11.10",
+    "ty>=0.0.1a8",
 ]
+
+
+[tool.pydoclint]
+allow-init-docstring = true
+style = "google"
+
+[tool.ruff]
+line-length = 88
+select = ["T201"] # flag print statements
+
+[tool.ruff.lint]
+extend-select = ["D"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.format]
+docstring-code-format = true
+
+[tool.ruff.lint.per-file-ignores]
+"*_test.py" = ["D"]
+
+[tool.pytest.ini_options]
+testpaths = ["src/**/*_test.py"]
+
+[tool.coverage.run]
+branch = true
+omit = ["*_test.py"]
 
 [project.scripts]
 app = "trading_strategy.app:main"

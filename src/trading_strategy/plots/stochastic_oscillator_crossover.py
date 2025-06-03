@@ -1,3 +1,5 @@
+"""Plot for stochastic oscillator crossover."""
+
 import datetime
 
 from matplotlib import pyplot as plt
@@ -10,10 +12,18 @@ config = config_parser.parse_from_file(config_file="config.toml")
 
 
 def plot_stochastic_oscillator(
-    strategy: pd.DataFrame,
-    start_date: datetime.date,
-    end_date: datetime.date,
+    strategy: pd.DataFrame, start_date: datetime.date, end_date: datetime.date
 ) -> Figure:
+    """Plots the Stochastic Oscillator (%K and %D lines) and crossover signals for a trading strategy.
+
+    Args:
+        strategy (pd.DataFrame): A DataFrame containing the strategy data, expected to have '%k', '%d', and 'crossover' columns.
+        start_date (datetime.date): The start date for plotting the data.
+        end_date (datetime.date): The end date for plotting the data.
+
+    Returns:
+        Figure: A matplotlib Figure object displaying the Stochastic Oscillator lines, oversold/overbought levels, and buy/sell signals.
+    """
     fig, ax = plt.subplots(figsize=config.plots.fig_size)
     strategy = strategy.loc[start_date:end_date]
 

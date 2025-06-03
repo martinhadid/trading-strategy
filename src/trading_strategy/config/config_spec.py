@@ -9,7 +9,7 @@ class DataConfigSpec:
     """Data-level configuration spec.
 
     Attributes:
-        period (int): amount of data to download.
+        period (str): amount of data to download.
     """
 
     period: str = "5y"
@@ -21,8 +21,8 @@ class PlotsConfigSpec:
 
     Attributes:
         x_rotation (int): x-axis rotation.
-        value_offset (int): distance from the plot.
-        fig_size (tuple[int, int]): figure size.
+        value_offset (list[int] | tuple[int, int]): distance from the plot.
+        fig_size (list[int] | tuple[int, int] ): figure size.
         arrow_size (int): arrow size.
 
 
@@ -44,7 +44,7 @@ class ProjectConfigSpec:
     """Project-level configuration spec.
 
     Attributes:
-        stop_loss (int): Stop loss percentage for the trading strategy.
+        stop_loss (float): Stop loss percentage for the trading strategy.
     """
 
     stop_loss: float = 0.06
@@ -81,7 +81,8 @@ class OptimizationsConfigSpec:
     """Optimizations-level configuration spec.
 
     Attributes:
-        rsi_period (int): amount of days to consider.
+        rsi (RSIConfigSpec): RSI configuration.
+        stochastic_oscillator (StochasticOscillatorConfigSpec): Stochastic oscillator configuration.
     """
 
     rsi: RSIConfigSpec

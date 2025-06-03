@@ -1,3 +1,5 @@
+"""Stochastic oscillator optimization."""
+
 import pandas as pd
 
 from trading_strategy.config import config_parser
@@ -28,6 +30,19 @@ D_TIME_PERIODS = config.optimizations.stochastic_oscillator.d_time_periods
 
 
 def stochastic_oscillator(stock: pd.DataFrame) -> pd.DataFrame:
+    """Calculates the Stochastic Oscillator (%K and %D lines) and generates crossover signals.
+
+    This function computes the Slow Stochastic Oscillator based on the provided stock data.
+    It uses the 'Close', 'High', and 'Low' prices to calculate %K and %D, and then
+    identifies crossovers between these two lines.
+
+    Args:
+        stock (pd.DataFrame): A DataFrame containing stock data, expected to have 'Close', 'High', and 'Low' columns.
+
+    Returns:
+        pd.DataFrame: A DataFrame containing the '%k' series, '%d' series,
+                      and a 'crossover' signal series (1 for buy, -1 for sell, 0 otherwise).
+    """
     close_price = stock["Close"]
     high_price = stock["High"]
     low_price = stock["Low"]

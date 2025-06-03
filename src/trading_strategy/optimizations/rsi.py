@@ -11,6 +11,18 @@ PERIODS = config.optimizations.rsi.period
 
 
 def _wilder_smoothing(values: pd.Series, initial_avg: float, name: str) -> pd.Series:
+    """Applies Wilder's smoothing method to a series of values.
+
+    This is a specific type of exponential moving average commonly used in RSI calculation.
+
+    Args:
+        values (pd.Series): The input series to be smoothed.
+        initial_avg (float): The initial average value for the smoothing calculation.
+        name (str): The name to assign to the resulting smoothed series.
+
+    Returns:
+        pd.Series: A series containing the Wilder-smoothed values.
+    """
     # https://blog.quantinsti.com/rsi-indicator/
     avg_values = [None] * PERIODS
     avg_values.append(initial_avg)
@@ -24,6 +36,18 @@ def _wilder_smoothing(values: pd.Series, initial_avg: float, name: str) -> pd.Se
 
 
 def relative_strength_index(stock: pd.DataFrame) -> pd.Series:
+    """Calculates the Relative Strength Index (RSI) for a given stock DataFrame.
+
+    The RSI is a momentum indicator that measures the magnitude of recent price
+    changes to evaluate overbought or oversold conditions in the price of a stock
+    or other asset.
+
+    Args:
+        stock (pd.DataFrame): A DataFrame containing stock data, expected to have a 'Close' column.
+
+    Returns:
+        pd.Series: A series representing the Relative Strength Index (RSI) values.
+    """
     change = moving_diff(price=stock["Close"], days=1, name="change")
     gain = pd.Series(data=change.clip(lower=0), name="gain")
     loss = pd.Series(data=abs(change.clip(upper=0)), name="loss")
@@ -45,8 +69,3 @@ def relative_strength_index(stock: pd.DataFrame) -> pd.Series:
 
     rs = wilder_smoothing_avg_gain / wilder_smoothing_avg_loss
     return pd.Series(data=100 - (100 / (1 + rs)), name="rsi")
-
-
-if __name__ == "__main__":
-    df = pd.read_csv("../test/rsi.csv")
-    print(relative_strength_index(df))
